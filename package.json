@@ -1,0 +1,8 @@
+{
+  "name": "react-downscreen",
+  "version": "0.0.1",
+  "main": "index.js",
+  "repository": "git@github.com:therealparmesh/react-downscreen.git",
+  "author": "Parmesh Krishen <therealparmesh@outlook.com>",
+  "license": "MIT"
+}
