@@ -1,0 +1,67 @@
+---
+name: Introduction
+order: 1
+route: /
+---
+
+# Introduction
+
+**React Downscreen ⛹️** - Simple framework for building accessibility-friendly selects, dropdowns, autocompletes, and comboboxes in React.
+
+## Install
+
+> Note: React 16.8+ is required.
+
+### With `npm`
+
+```sh
+npm i react-downscreen
+```
+
+### With `yarn`
+
+```sh
+yarn add react-downscreen
+```
+
+## Quick Example
+
+import QuickExample from '../src/docs/QuickExample';
+
+<QuickExample />
+
+### Source Code
+
+```jsx
+import * as React from 'react';
+import Downscreen, { Button, Menu, MenuItem } from '../';
+```
+
+```jsx
+const items = [
+  /* ... */
+];
+```
+
+```jsx
+<Downscreen
+  onChange={console.log}
+  itemsLength={items.length}
+  id="quick-example"
+>
+  <Button>
+    {({ selectedIndex }) =>
+      selectedIndex === null ? '(nothing)' : items[selectedIndex].value
+    }
+  </Button>
+  <Menu>
+    {({ index, selectedIndex, highlightedIndex }) => (
+      <MenuItem key={items[index].id} index={index}>
+        {items[index].value}
+        {selectedIndex === index ? '-selected' : ''}
+        {highlightedIndex === index ? '-highlighted' : ''}
+      </MenuItem>
+    )}
+  </Menu>
+</Downscreen>
+```
