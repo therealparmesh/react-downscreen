@@ -132,6 +132,8 @@ const Button = ({ children, ...props }: Props) => {
       aria-haspopup
       data-toggle
       id={`${id}-button`}
+      role="button"
+      type="button"
       onBlur={onBlur}
       onKeyUp={onKeyUp}
       onKeyDown={onKeyDown}
