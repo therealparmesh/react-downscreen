@@ -1,4 +1,5 @@
 import * as React from 'react';
+import styled from 'styled-components';
 import Downscreen, { Button, Menu, MenuItem } from '..';
 
 const items = [
@@ -36,6 +37,41 @@ const items = [
   },
 ];
 
+const StyledButton = styled(Button)`
+  background: white;
+  border-radius: 3px;
+  border: 2px solid orange;
+  color: orange;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 4px 16px;
+
+  &:focus {
+    box-shadow: 0 0 0 3px lightblue, 0 0 0 1.5px lightblue;
+    outline: none;
+  }
+`;
+
+const StyledMenu = styled(Menu)`
+  background: white;
+  box-shadow: 0px 8px 16px 0px lightgray;
+  position: absolute;
+  width: 360px;
+  z-index: 1000;
+`;
+
+const StyledMenuItem = styled(MenuItem)<{
+  selected: boolean;
+  highlighted: boolean;
+}>`
+  background: ${({ highlighted }) => (highlighted ? 'lightgreen' : 'white')};
+  color: palevioletred;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: ${({ selected }) => (selected ? 'bold' : 'normal')};
+  padding: 8px 16px;
+`;
+
 const QuickExample = () => {
   return (
     <Downscreen
@@ -43,20 +79,23 @@ const QuickExample = () => {
       itemsLength={items.length}
       id="quick-example"
     >
-      <Button>
+      <StyledButton>
         {({ selectedIndex }) =>
           selectedIndex === null ? '(nothing)' : items[selectedIndex].value
         }
-      </Button>
-      <Menu>
+      </StyledButton>
+      <StyledMenu>
         {({ index, selectedIndex, highlightedIndex }) => (
-          <MenuItem key={items[index].id} index={index}>
+          <StyledMenuItem
+            key={items[index].id}
+            index={index}
+            selected={selectedIndex === index}
+            highlighted={highlightedIndex === index}
+          >
             {items[index].value}
-            {selectedIndex === index ? '-selected' : ''}
-            {highlightedIndex === index ? '-highlighted' : ''}
-          </MenuItem>
+          </StyledMenuItem>
         )}
-      </Menu>
+      </StyledMenu>
     </Downscreen>
   );
 };
