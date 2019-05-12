@@ -45,6 +45,7 @@ const StyledButton = styled(Button)`
   cursor: pointer;
   font-size: 16px;
   padding: 4px 16px;
+  width: 240px;
 
   &:focus {
     box-shadow: 0 0 0 3px lightblue, 0 0 0 1.5px lightblue;
@@ -56,7 +57,7 @@ const StyledMenu = styled(Menu)`
   background: white;
   box-shadow: 0px 8px 16px 0px lightgray;
   position: absolute;
-  width: 360px;
+  width: 240px;
   z-index: 1000;
 `;
 
