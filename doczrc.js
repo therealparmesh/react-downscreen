@@ -1,7 +1,7 @@
 import pkg from './package.json';
 
 export default {
-  title: 'Downscreen ⛹️',
+  title: 'React Downscreen ⛹️',
   base: `/${pkg.name}/`,
   typescript: true,
 };
