@@ -24,55 +24,10 @@ npm i react-downscreen
 yarn add react-downscreen
 ```
 
-## Demo
+## Quick Example
 
 import QuickExample from '../src/docs/QuickExample';
 
 <QuickExample />
 
-## Quick Example
-
-```jsx
-import * as React from 'react';
-import Downscreen, { Button, Menu, MenuItem } from 'react-downscreen';
-```
-
-```jsx
-const items = [
-  {
-    id: 'foo',
-    value: 'Foo',
-  },
-  {
-    id: 'bar',
-    value: 'Bar',
-  },
-  {
-    id: 'baz',
-    value: 'Baz',
-  },
-];
-```
-
-```jsx
-<Downscreen
-  onChange={console.log}
-  itemsLength={items.length}
-  id="quick-example"
->
-  <Button>
-    {({ selectedIndex }) =>
-      selectedIndex === null ? '(nothing)' : items[selectedIndex].value
-    }
-  </Button>
-  <Menu>
-    {({ index, selectedIndex, highlightedIndex }) => (
-      <MenuItem key={items[index].id} index={index}>
-        {items[index].value}
-        {selectedIndex === index ? '-selected' : ''}
-        {highlightedIndex === index ? '-highlighted' : ''}
-      </MenuItem>
-    )}
-  </Menu>
-</Downscreen>
-```
+[View source code here.](https://github.com/therealparmesh/react-downscreen/blob/master/src/docs/QuickExample.tsx)
