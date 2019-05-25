@@ -8,9 +8,25 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
 };
 
 const MenuItem = ({ index, children, ...props }: Props) => {
-  const { state, setState, id } = React.useContext(DownscreenContext);
+  const { state, setState, id, getMenuItemsRef } = React.useContext(
+    DownscreenContext
+  );
   const shouldScroll = React.useRef<boolean>(true);
   const scrollRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    getMenuItemsRef().current = {
+      ...getMenuItemsRef().current,
+      [index]: true,
+    };
+
+    return () => {
+      getMenuItemsRef().current = {
+        ...getMenuItemsRef().current,
+        [index]: false,
+      };
+    };
+  }, []);
 
   React.useEffect(() => {
     if (

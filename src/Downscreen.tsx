@@ -1,16 +1,22 @@
 import * as React from 'react';
-import DownscreenContext, { initialState, State } from './DownscreenContext';
+import DownscreenContext, {
+  initialState,
+  State,
+  MenuItemsRef,
+} from './DownscreenContext';
 import useEffectAfterMount from './useEffectAfterMount';
+import getFirstPossibleIndex from './getFirstPossibleIndex';
+import getPreviousIndex from './getPreviousIndex';
 
 // TODO: extract custom hooks, break them down by domain
 // TODO: clean up state management (useReducer), memoize more for better performance (useMemo)
 
-type Props = React.HTMLAttributes<HTMLDivElement> & {
+export type Props = React.HTMLAttributes<HTMLDivElement> & {
   children: React.ReactNode;
   onChange: (selectedIndex: State['selectedIndex']) => void;
   initial?: State;
   itemsLength: number;
-  id: string;
+  id: Required<React.HTMLAttributes<HTMLDivElement>['id']>;
 };
 
 const Downscreen = ({
@@ -21,6 +27,7 @@ const Downscreen = ({
   id,
   ...props
 }: Props) => {
+  const menuItemsRef = React.useRef<MenuItemsRef>({});
   const [state, setState] = React.useState<State>(initial);
   const value = React.useMemo(
     () => ({
@@ -28,19 +35,54 @@ const Downscreen = ({
       setState,
       itemsLength,
       id,
+      getMenuItemsRef: () => menuItemsRef,
     }),
     [state, itemsLength, id]
   );
 
   useEffectAfterMount(() => {
-    onChange(state.selectedIndex);
-  }, [state.selectedIndex]);
+    if (state.isOpen) {
+      setState(s => ({
+        ...s,
+        highlightedIndex: null,
+      }));
+    }
+  }, [itemsLength]);
 
   useEffectAfterMount(() => {
-    if (state.highlightedIndex >= itemsLength) {
-      setState(s => ({ ...s, highlightedIndex: 0 }));
+    if (state.isOpen) {
+      switch (state.lastKey) {
+        case 'ArrowUp': {
+          setState(s => ({
+            ...s,
+            highlightedIndex: getPreviousIndex(
+              getFirstPossibleIndex(itemsLength, menuItemsRef.current),
+              itemsLength,
+              menuItemsRef.current
+            ),
+          }));
+
+          break;
+        }
+        case 'ArrowDown': {
+          setState(s => ({
+            ...s,
+            highlightedIndex: getFirstPossibleIndex(
+              itemsLength,
+              menuItemsRef.current
+            ),
+            lastKey: 'ArrowDown',
+          }));
+
+          break;
+        }
+      }
     }
-  }, [state.highlightedIndex, itemsLength]);
+  }, [state.isOpen]);
+
+  useEffectAfterMount(() => {
+    onChange(state.selectedIndex);
+  }, [state.selectedIndex]);
 
   return (
     <DownscreenContext.Provider value={value}>

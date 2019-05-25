@@ -1,6 +1,8 @@
 import * as React from 'react';
 import DownscreenContext, { State } from './DownscreenContext';
 import normalizeArrowKey from './normalizeArrowKey';
+import getNextIndex from './getNextIndex';
+import getPreviousIndex from './getPreviousIndex';
 
 type Props = React.HTMLAttributes<HTMLButtonElement> & {
   children: (args: {
@@ -9,14 +11,17 @@ type Props = React.HTMLAttributes<HTMLButtonElement> & {
 };
 
 const Button = ({ children, ...props }: Props) => {
-  const { state, setState, itemsLength, id } = React.useContext(
-    DownscreenContext
-  );
+  const {
+    state,
+    setState,
+    itemsLength,
+    id,
+    getMenuItemsRef,
+  } = React.useContext(DownscreenContext);
 
   const onBlur = React.useCallback(() => {
     setState(s => ({
       ...s,
-      highlightedIndex: 0,
       isOpen: false,
     }));
   }, [state.highlightedIndex, state.isOpen]);
@@ -32,10 +37,12 @@ const Button = ({ children, ...props }: Props) => {
       switch (key) {
         case ' ': {
           event.preventDefault();
+
           setState(s => ({
             ...s,
-            highlightedIndex: 0,
             isOpen: !s.isOpen,
+            highlightedIndex: null,
+            lastKey: ' ',
           }));
 
           break;
@@ -43,11 +50,13 @@ const Button = ({ children, ...props }: Props) => {
         case 'Enter': {
           if (state.isOpen) {
             event.preventDefault();
+
             setState(s => ({
               ...s,
               selectedIndex: s.highlightedIndex,
-              highlightedIndex: 0,
+              highlightedIndex: null,
               isOpen: false,
+              lastKey: 'Enter',
             }));
           }
 
@@ -55,31 +64,34 @@ const Button = ({ children, ...props }: Props) => {
         }
         case 'Escape': {
           event.preventDefault();
+
           setState(s => ({
             ...s,
-            highlightedIndex: 0,
             isOpen: false,
+            highlightedIndex: null,
+            lastKey: 'Escape',
           }));
 
           break;
         }
         case 'ArrowUp': {
+          event.preventDefault();
+
           if (state.isOpen) {
-            event.preventDefault();
-
-            const nextIndex =
-              state.highlightedIndex === 0
-                ? itemsLength - 1
-                : state.highlightedIndex - 1;
-
             setState(s => ({
               ...s,
-              highlightedIndex: nextIndex,
+              highlightedIndex: getPreviousIndex(
+                state.highlightedIndex,
+                itemsLength,
+                getMenuItemsRef().current
+              ),
+              lastKey: 'ArrowUp',
             }));
           } else {
             setState(s => ({
               ...s,
               isOpen: true,
+              lastKey: 'ArrowUp',
             }));
           }
 
@@ -89,19 +101,20 @@ const Button = ({ children, ...props }: Props) => {
           event.preventDefault();
 
           if (state.isOpen) {
-            const nextIndex =
-              state.highlightedIndex === itemsLength - 1
-                ? 0
-                : state.highlightedIndex + 1;
-
             setState(s => ({
               ...s,
-              highlightedIndex: nextIndex,
+              highlightedIndex: getNextIndex(
+                state.highlightedIndex,
+                itemsLength,
+                getMenuItemsRef().current
+              ),
+              lastKey: 'ArrowDown',
             }));
           } else {
             setState(s => ({
               ...s,
               isOpen: true,
+              lastKey: 'ArrowDown',
             }));
           }
 
@@ -109,12 +122,13 @@ const Button = ({ children, ...props }: Props) => {
         }
       }
     },
-    [state.highlightedIndex, state.isOpen, itemsLength]
+    [itemsLength, state.highlightedIndex, state.isOpen]
   );
 
   const onClick = React.useCallback(event => {
     event.preventDefault();
     event.target.focus();
+
     setState(s => ({
       ...s,
       isOpen: !s.isOpen,
