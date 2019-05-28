@@ -55,11 +55,12 @@ const StyledButton = styled(Button)`
 
 const StyledInput = styled(Input)`
   background: white;
-  border: 2px solid orange;
+  border: 1px solid orange;
   border-radius: 3px;
   color: orange;
   font-size: 16px;
   padding: 4px 8px;
+  width: 222px;
 
   &:focus {
     box-shadow: 0 0 0 3px lightblue, 0 0 0 1.5px lightblue;

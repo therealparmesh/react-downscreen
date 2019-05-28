@@ -34,10 +34,12 @@ import {
 <QuickButtonExample />
 <QuickInputExample />
 
-```jsx
+```js
 import * as React from 'react';
 import Downscreen, { Button, Input, Label, Menu, MenuItem } from '..';
+```
 
+```js
 const items = [
   {
     id: '1',
@@ -72,7 +74,9 @@ const items = [
     value: 'papaya',
   },
 ];
+```
 
+```jsx
 <Downscreen
   onSelect={console.log}
   itemsLength={items.length}
@@ -98,7 +102,9 @@ const items = [
     )}
   </Menu>
 </Downscreen>
+```
 
+```jsx
 <Downscreen
   onSelect={console.log}
   itemsLength={items.length}
@@ -112,9 +118,7 @@ const items = [
   </Input>
   <Menu>
     {({ index, selectedIndex, highlightedIndex, inputValue }) =>
-      items[index].value
-        .toLowerCase()
-        .includes(inputValue.toLowerCase()) && (
+      items[index].value.toLowerCase().includes(inputValue.toLowerCase()) && (
         <MenuItem
           key={items[index].id}
           index={index}
