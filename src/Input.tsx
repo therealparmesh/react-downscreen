@@ -37,6 +37,7 @@ const Input = ({ children, ...props }: Props) => {
     setState(s => ({
       ...s,
       isOpen: false,
+      highlightedIndex: null,
     }));
   }, []);
 

@@ -21,6 +21,7 @@ const Button = ({ children, ...props }: Props) => {
     setState(s => ({
       ...s,
       isOpen: false,
+      highlightedIndex: null,
     }));
   }, []);
 
@@ -51,9 +52,9 @@ const Button = ({ children, ...props }: Props) => {
 
             setState(s => ({
               ...s,
+              isOpen: false,
               selectedIndex: s.highlightedIndex,
               highlightedIndex: null,
-              isOpen: false,
               lastKey: 'Enter',
             }));
           }
