@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import Downscreen, { Button, Menu, MenuItem } from '..';
+import Downscreen, { Button, Input, Label, Menu, MenuItem } from '..';
 
 const items = [
   {
@@ -53,6 +53,27 @@ const StyledButton = styled(Button)`
   }
 `;
 
+const StyledInput = styled(Input)`
+  background: white;
+  border: 2px solid orange;
+  border-radius: 3px;
+  color: orange;
+  font-size: 16px;
+  padding: 4px 8px;
+
+  &:focus {
+    box-shadow: 0 0 0 3px lightblue, 0 0 0 1.5px lightblue;
+    outline: none;
+  }
+`;
+
+const StyledLabel = styled(Label)`
+  display: block;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 16px 0 8px;
+`;
+
 const StyledMenu = styled(Menu)`
   background: white;
   box-shadow: 0px 8px 16px 0px lightgray;
@@ -73,15 +94,15 @@ const StyledMenuItem = styled(MenuItem)<{
   padding: 8px 16px;
 `;
 
-const QuickExample = () => {
+export const QuickButtonExample = () => {
   return (
     <Downscreen
-      onChange={console.log}
+      onSelect={console.log}
       itemsLength={items.length}
-      id="quick-example"
+      id="quick-button-example"
     >
       <StyledButton>
-        {({ selectedIndex }) =>
+        {selectedIndex =>
           selectedIndex === null ? '(nothing)' : items[selectedIndex].value
         }
       </StyledButton>
@@ -101,4 +122,35 @@ const QuickExample = () => {
   );
 };
 
-export default QuickExample;
+export const QuickInputExample = () => {
+  return (
+    <Downscreen
+      onSelect={console.log}
+      itemsLength={items.length}
+      id="quick-input-example"
+    >
+      <StyledLabel>Select:</StyledLabel>
+      <StyledInput>
+        {selectedIndex =>
+          selectedIndex === null ? null : items[selectedIndex].value
+        }
+      </StyledInput>
+      <StyledMenu>
+        {({ index, selectedIndex, highlightedIndex, inputValue }) =>
+          items[index].value
+            .toLowerCase()
+            .includes(inputValue.toLowerCase()) && (
+            <StyledMenuItem
+              key={items[index].id}
+              index={index}
+              selected={selectedIndex === index}
+              highlighted={highlightedIndex === index}
+            >
+              {items[index].value}
+            </StyledMenuItem>
+          )
+        }
+      </StyledMenu>
+    </Downscreen>
+  );
+};

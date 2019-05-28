@@ -24,10 +24,105 @@ npm i react-downscreen
 yarn add react-downscreen
 ```
 
-## Quick Example
+## Quick Examples
 
-import QuickExample from '../src/docs/QuickExample';
+import {
+  QuickButtonExample,
+  QuickInputExample,
+} from '../src/docs/QuickExamples';
 
-<QuickExample />
+<QuickButtonExample />
+<QuickInputExample />
 
-[View source code here.](https://github.com/therealparmesh/react-downscreen/blob/master/src/docs/QuickExample.tsx)
+```jsx
+import * as React from 'react';
+import Downscreen, { Button, Input, Label, Menu, MenuItem } from '..';
+
+const items = [
+  {
+    id: '1',
+    value: 'apple',
+  },
+  {
+    id: '2',
+    value: 'banana',
+  },
+  {
+    id: '3',
+    value: 'pear',
+  },
+  {
+    id: '4',
+    value: 'watermelon',
+  },
+  {
+    id: '5',
+    value: 'lemon',
+  },
+  {
+    id: '6',
+    value: 'orange',
+  },
+  {
+    id: '7',
+    value: 'dragonfruit',
+  },
+  {
+    id: '8',
+    value: 'papaya',
+  },
+];
+
+<Downscreen
+  onSelect={console.log}
+  itemsLength={items.length}
+  id="quick-button-example"
+>
+  <Button>
+    {selectedIndex =>
+      selectedIndex === null ? '(nothing)' : items[selectedIndex].value
+    }
+  </Button>
+  <Menu>
+    {({ index, selectedIndex, highlightedIndex }) => (
+      <MenuItem
+        key={items[index].id}
+        index={index}
+        selected={selectedIndex === index}
+        highlighted={highlightedIndex === index}
+      >
+        {items[index].value}
+      </MenuItem>
+    )}
+  </Menu>
+</Downscreen>
+
+<Downscreen
+  onSelect={console.log}
+  itemsLength={items.length}
+  id="quick-input-example"
+>
+  <Label>Select:</Label>
+  <Input>
+    {selectedIndex =>
+      selectedIndex === null ? null : items[selectedIndex].value
+    }
+  </Input>
+  <Menu>
+    {({ index, selectedIndex, highlightedIndex, inputValue }) =>
+      items[index].value
+        .toLowerCase()
+        .includes(inputValue.toLowerCase()) && (
+        <MenuItem
+          key={items[index].id}
+          index={index}
+          selected={selectedIndex === index}
+          highlighted={highlightedIndex === index}
+        >
+          {items[index].value}
+        </MenuItem>
+      )
+    }
+  </Menu>
+</Downscreen>
+```
