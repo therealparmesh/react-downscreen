@@ -6,7 +6,7 @@ route: /
 
 # Introduction
 
-**React Downscreen ⛹️** - Simple framework for building accessibility-friendly selects, dropdowns, autocompletes, and comboboxes in React.
+**React Downscreen ⛹️** - A simple framework for building accessibility-friendly selects, dropdowns, autocompletes, and comboboxes in React. Heavily inspired by [the excellent library Downshift](https://github.com/downshift-js/downshift).
 
 ## Install
 
@@ -88,8 +88,10 @@ const items = [
       <MenuItem
         key={items[index].id}
         index={index}
-        selected={selectedIndex === index}
-        highlighted={highlightedIndex === index}
+        style={{
+          background: highlightedIndex === index ? 'lightgray' : 'white',
+          fontWeight: selectedIndex === index ? 'bold' : 'normal',
+        }}
       >
         {items[index].value}
       </MenuItem>
@@ -116,8 +118,10 @@ const items = [
         <MenuItem
           key={items[index].id}
           index={index}
-          selected={selectedIndex === index}
-          highlighted={highlightedIndex === index}
+          style={{
+            background: highlightedIndex === index ? 'lightgray' : 'white',
+            fontWeight: selectedIndex === index ? 'bold' : 'normal',
+          }}
         >
           {items[index].value}
         </MenuItem>

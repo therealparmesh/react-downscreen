@@ -86,7 +86,7 @@ const StyledMenuItem = styled(MenuItem)<{
   selected: boolean;
   highlighted: boolean;
 }>`
-  background: ${({ highlighted }) => (highlighted ? 'lightgreen' : 'white')};
+  background: ${({ highlighted }) => (highlighted ? 'lightgray' : 'white')};
   color: palevioletred;
   cursor: pointer;
   font-size: 16px;
