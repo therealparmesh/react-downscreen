@@ -5,6 +5,7 @@ export interface State {
   isOpen: boolean;
   selectedIndex: number | null;
   highlightedIndex: number | null;
+  inputValue: string;
   lastKey: ' ' | 'Enter' | 'Escape' | 'ArrowUp' | 'ArrowDown' | null;
 }
 
@@ -16,6 +17,7 @@ export const initialState = {
   isOpen: false,
   selectedIndex: null,
   highlightedIndex: null,
+  inputValue: '',
   lastKey: null,
 };
 

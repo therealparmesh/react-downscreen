@@ -1,4 +1,4 @@
-import getFirstPossibleIndex from './getFirstPossibleIndex';
+import getLastPossibleIndex from './getLastPossibleIndex';
 import { State, MenuItemsRef } from './DownscreenContext';
 import { Props } from './Downscreen';
 
@@ -15,13 +15,7 @@ const getPreviousIndex = (
     }
   }
 
-  for (let i = itemsLength - 1; i >= 0; i--) {
-    if (map[i]) {
-      return i;
-    }
-  }
-
-  return getFirstPossibleIndex(itemsLength, map);
+  return getLastPossibleIndex(itemsLength, map);
 };
 
 export default getPreviousIndex;

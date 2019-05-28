@@ -6,6 +6,7 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
     index: number;
     selectedIndex: State['selectedIndex'];
     highlightedIndex: State['highlightedIndex'];
+    inputValue: State['inputValue'];
   }) => React.ReactNode;
 };
 
@@ -23,9 +24,10 @@ const Menu = ({ children, ...props }: Props) => {
             index,
             selectedIndex: state.selectedIndex,
             highlightedIndex: state.highlightedIndex,
+            inputValue: state.inputValue,
           })
       ),
-    [state.selectedIndex, state.highlightedIndex]
+    [state.selectedIndex, state.highlightedIndex, state.inputValue]
   );
 
   return state.isOpen ? (

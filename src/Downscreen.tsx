@@ -6,14 +6,14 @@ import DownscreenContext, {
 } from './DownscreenContext';
 import useEffectAfterMount from './useEffectAfterMount';
 import getFirstPossibleIndex from './getFirstPossibleIndex';
-import getPreviousIndex from './getPreviousIndex';
+import getLastPossibleIndex from './getLastPossibleIndex';
 
 // TODO: extract custom hooks, break them down by domain
 // TODO: clean up state management (useReducer), memoize more for better performance (useMemo)
 
 export type Props = React.HTMLAttributes<HTMLDivElement> & {
   children: React.ReactNode;
-  onChange: (selectedIndex: State['selectedIndex']) => void;
+  onSelect: (selectedIndex: State['selectedIndex']) => void;
   initial?: State;
   itemsLength: number;
   id: Required<React.HTMLAttributes<HTMLDivElement>['id']>;
@@ -21,7 +21,7 @@ export type Props = React.HTMLAttributes<HTMLDivElement> & {
 
 const Downscreen = ({
   children,
-  onChange,
+  onSelect = () => {},
   initial = initialState,
   itemsLength,
   id,
@@ -42,21 +42,11 @@ const Downscreen = ({
 
   useEffectAfterMount(() => {
     if (state.isOpen) {
-      setState(s => ({
-        ...s,
-        highlightedIndex: null,
-      }));
-    }
-  }, [itemsLength]);
-
-  useEffectAfterMount(() => {
-    if (state.isOpen) {
       switch (state.lastKey) {
         case 'ArrowUp': {
           setState(s => ({
             ...s,
-            highlightedIndex: getPreviousIndex(
-              getFirstPossibleIndex(itemsLength, menuItemsRef.current),
+            highlightedIndex: getLastPossibleIndex(
               itemsLength,
               menuItemsRef.current
             ),
@@ -81,7 +71,7 @@ const Downscreen = ({
   }, [state.isOpen]);
 
   useEffectAfterMount(() => {
-    onChange(state.selectedIndex);
+    onSelect(state.selectedIndex);
   }, [state.selectedIndex]);
 
   return (

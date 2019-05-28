@@ -1,14 +1,17 @@
 import * as React from 'react';
 import DownscreenContext, { State } from './DownscreenContext';
+import useEffectAfterMount from './useEffectAfterMount';
 import normalizeArrowKey from './normalizeArrowKey';
 import getNextIndex from './getNextIndex';
 import getPreviousIndex from './getPreviousIndex';
 
-type Props = React.HTMLAttributes<HTMLButtonElement> & {
-  children: (selectedIndex: State['selectedIndex']) => React.ReactNode;
+type Props = React.HTMLAttributes<HTMLInputElement> & {
+  children: (
+    selectedIndex: State['selectedIndex']
+  ) => string | false | null | undefined;
 };
 
-const Button = ({ children, ...props }: Props) => {
+const Input = ({ children, ...props }: Props) => {
   const {
     state,
     setState,
@@ -17,6 +20,19 @@ const Button = ({ children, ...props }: Props) => {
     getMenuItemsRef,
   } = React.useContext(DownscreenContext);
 
+  const onChange = React.useCallback(event => {
+    const {
+      target: { value: inputValue },
+    } = event;
+
+    setState(s => ({
+      ...s,
+      isOpen: true,
+      highlightedIndex: null,
+      inputValue,
+    }));
+  }, []);
+
   const onBlur = React.useCallback(() => {
     setState(s => ({
       ...s,
@@ -24,36 +40,20 @@ const Button = ({ children, ...props }: Props) => {
     }));
   }, []);
 
-  const onKeyUp = React.useCallback(event => {
-    event.preventDefault();
-  }, []);
-
   const onKeyDown = React.useCallback(
     event => {
       const key = normalizeArrowKey(event);
 
       switch (key) {
-        case ' ': {
-          event.preventDefault();
-
-          setState(s => ({
-            ...s,
-            isOpen: !s.isOpen,
-            highlightedIndex: null,
-            lastKey: ' ',
-          }));
-
-          break;
-        }
         case 'Enter': {
           if (state.isOpen) {
             event.preventDefault();
 
             setState(s => ({
               ...s,
+              isOpen: false,
               selectedIndex: s.highlightedIndex,
               highlightedIndex: null,
-              isOpen: false,
               lastKey: 'Enter',
             }));
           }
@@ -72,6 +72,7 @@ const Button = ({ children, ...props }: Props) => {
 
           break;
         }
+        case 'End':
         case 'ArrowUp': {
           event.preventDefault();
 
@@ -95,6 +96,7 @@ const Button = ({ children, ...props }: Props) => {
 
           break;
         }
+        case 'Home':
         case 'ArrowDown': {
           event.preventDefault();
 
@@ -123,37 +125,38 @@ const Button = ({ children, ...props }: Props) => {
     [itemsLength, state.highlightedIndex, state.isOpen]
   );
 
-  const onClick = React.useCallback(event => {
-    event.preventDefault();
-    event.target.focus();
-
-    setState(s => ({
-      ...s,
-      isOpen: !s.isOpen,
-    }));
-  }, []);
-
-  const buttonChildren = React.useMemo(() => children(state.selectedIndex), [
+  const inputChildren = React.useMemo(() => children(state.selectedIndex), [
     state.selectedIndex,
   ]);
 
+  useEffectAfterMount(() => {
+    setState(s => ({
+      ...s,
+      inputValue:
+        typeof inputChildren === 'string' ? inputChildren : s.inputValue,
+    }));
+  }, [inputChildren]);
+
   return (
-    <button
-      aria-label={state.isOpen ? 'close menu' : 'open menu'}
-      aria-haspopup
-      data-toggle
-      id={`${id}-button`}
-      role="button"
-      type="button"
+    <input
+      aria-autocomplete="list"
+      aria-activedescendant={
+        state.isOpen && state.highlightedIndex !== null
+          ? `${id}-menu-item-${state.highlightedIndex}`
+          : undefined
+      }
+      aria-controls={state.isOpen ? `${id}-menu` : undefined}
+      aria-labelledby={`${id}-label`}
+      autoComplete="off"
+      id={`${id}-input`}
+      type="text"
+      value={state.inputValue}
+      onChange={onChange}
       onBlur={onBlur}
-      onKeyUp={onKeyUp}
       onKeyDown={onKeyDown}
-      onClick={onClick}
       {...props}
-    >
-      {buttonChildren}
-    </button>
+    />
   );
 };
 
-export default Button;
+export default Input;
