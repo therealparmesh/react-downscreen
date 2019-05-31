@@ -7,7 +7,7 @@ export interface State {
   highlightedIndex: number | null;
   inputValue: string;
   lastSelectedInputValue: string | null;
-  lastKey: ' ' | 'Enter' | 'Escape' | 'ArrowUp' | 'ArrowDown' | null;
+  lastKeyOnClose: ' ' | 'Enter' | 'Escape' | 'ArrowUp' | 'ArrowDown' | null;
 }
 
 export interface MenuItemsRef {
@@ -20,7 +20,7 @@ export const initialState = {
   highlightedIndex: null,
   inputValue: '',
   lastSelectedInputValue: null,
-  lastKey: null,
+  lastKeyOnClose: null,
 };
 
 const DownscreenContext = React.createContext<{

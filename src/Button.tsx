@@ -9,13 +9,9 @@ type Props = React.HTMLAttributes<HTMLButtonElement> & {
 };
 
 const Button = ({ children, ...props }: Props) => {
-  const {
-    state,
-    setState,
-    totalCount,
-    id,
-    getMenuItemsRef,
-  } = React.useContext(DownscreenContext);
+  const { state, setState, totalCount, id, getMenuItemsRef } = React.useContext(
+    DownscreenContext
+  );
 
   const onBlur = React.useCallback(() => {
     setState(s => ({
@@ -41,21 +37,22 @@ const Button = ({ children, ...props }: Props) => {
             ...s,
             isOpen: !s.isOpen,
             highlightedIndex: null,
-            lastKey: ' ',
           }));
 
           break;
         }
         case 'Enter': {
-          if (state.isOpen && state.highlightedIndex !== null) {
+          if (state.isOpen) {
             event.preventDefault();
 
             setState(s => ({
               ...s,
               isOpen: false,
-              selectedIndex: s.highlightedIndex,
+              selectedIndex:
+                s.highlightedIndex === null
+                  ? s.selectedIndex
+                  : s.highlightedIndex,
               highlightedIndex: null,
-              lastKey: 'Enter',
             }));
           }
 
@@ -71,7 +68,6 @@ const Button = ({ children, ...props }: Props) => {
             highlightedIndex: null,
             inputValue: '',
             lastSelectedInputValue: null,
-            lastKey: 'Escape',
           }));
 
           break;
@@ -83,17 +79,16 @@ const Button = ({ children, ...props }: Props) => {
             setState(s => ({
               ...s,
               highlightedIndex: getPreviousIndex(
-                state.highlightedIndex,
+                s.highlightedIndex,
                 totalCount,
                 getMenuItemsRef().current
               ),
-              lastKey: 'ArrowUp',
             }));
           } else {
             setState(s => ({
               ...s,
               isOpen: true,
-              lastKey: 'ArrowUp',
+              lastKeyOnClose: 'ArrowUp',
             }));
           }
 
@@ -106,17 +101,16 @@ const Button = ({ children, ...props }: Props) => {
             setState(s => ({
               ...s,
               highlightedIndex: getNextIndex(
-                state.highlightedIndex,
+                s.highlightedIndex,
                 totalCount,
                 getMenuItemsRef().current
               ),
-              lastKey: 'ArrowDown',
             }));
           } else {
             setState(s => ({
               ...s,
               isOpen: true,
-              lastKey: 'ArrowDown',
+              lastKeyOnClose: 'ArrowDown',
             }));
           }
 

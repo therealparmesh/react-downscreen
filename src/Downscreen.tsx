@@ -42,7 +42,7 @@ const Downscreen = ({
 
   useEffectAfterMount(() => {
     if (state.isOpen) {
-      switch (state.lastKey) {
+      switch (state.lastKeyOnClose) {
         case 'ArrowUp': {
           setState(s => ({
             ...s,
@@ -50,6 +50,7 @@ const Downscreen = ({
               totalCount,
               menuItemsRef.current
             ),
+            lastKeyOnClose: null,
           }));
 
           break;
@@ -61,7 +62,7 @@ const Downscreen = ({
               totalCount,
               menuItemsRef.current
             ),
-            lastKey: 'ArrowDown',
+            lastKeyOnClose: null,
           }));
 
           break;

@@ -47,15 +47,22 @@ const Input = ({ children, ...props }: Props) => {
 
       switch (key) {
         case 'Enter': {
-          if (state.isOpen && state.highlightedIndex !== null) {
+          if (state.isOpen) {
             event.preventDefault();
 
             setState(s => ({
               ...s,
               isOpen: false,
-              selectedIndex: s.highlightedIndex,
+              selectedIndex:
+                s.highlightedIndex === null
+                  ? s.selectedIndex
+                  : s.highlightedIndex,
               highlightedIndex: null,
-              lastKey: 'Enter',
+              inputValue:
+                typeof s.lastSelectedInputValue === 'string' &&
+                s.selectedIndex === s.highlightedIndex
+                  ? s.lastSelectedInputValue
+                  : s.inputValue,
             }));
           }
 
@@ -71,7 +78,6 @@ const Input = ({ children, ...props }: Props) => {
             highlightedIndex: null,
             inputValue: '',
             lastSelectedInputValue: null,
-            lastKey: 'Escape',
           }));
 
           break;
@@ -84,17 +90,16 @@ const Input = ({ children, ...props }: Props) => {
             setState(s => ({
               ...s,
               highlightedIndex: getPreviousIndex(
-                state.highlightedIndex,
+                s.highlightedIndex,
                 totalCount,
                 getMenuItemsRef().current
               ),
-              lastKey: 'ArrowUp',
             }));
           } else {
             setState(s => ({
               ...s,
               isOpen: true,
-              lastKey: 'ArrowUp',
+              lastKeyOnClose: 'ArrowUp',
             }));
           }
 
@@ -108,17 +113,16 @@ const Input = ({ children, ...props }: Props) => {
             setState(s => ({
               ...s,
               highlightedIndex: getNextIndex(
-                state.highlightedIndex,
+                s.highlightedIndex,
                 totalCount,
                 getMenuItemsRef().current
               ),
-              lastKey: 'ArrowDown',
             }));
           } else {
             setState(s => ({
               ...s,
               isOpen: true,
-              lastKey: 'ArrowDown',
+              lastKeyOnClose: 'ArrowDown',
             }));
           }
 

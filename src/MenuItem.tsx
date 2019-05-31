@@ -52,6 +52,11 @@ const MenuItem = ({ index, children, ...props }: Props) => {
       isOpen: false,
       selectedIndex: index,
       highlightedIndex: null,
+      inputValue:
+        typeof s.lastSelectedInputValue === 'string' &&
+        s.selectedIndex === s.highlightedIndex
+          ? s.lastSelectedInputValue
+          : s.inputValue,
     }));
   }, [index]);
 
