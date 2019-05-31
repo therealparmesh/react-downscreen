@@ -38,6 +38,7 @@ const Input = ({ children, ...props }: Props) => {
       ...s,
       isOpen: false,
       highlightedIndex: null,
+      inputValue: s.lastSelectedInputValue,
     }));
   }, []);
 
@@ -68,6 +69,7 @@ const Input = ({ children, ...props }: Props) => {
             ...s,
             isOpen: false,
             highlightedIndex: null,
+            inputValue: s.lastSelectedInputValue,
             lastKey: 'Escape',
           }));
 
@@ -135,6 +137,10 @@ const Input = ({ children, ...props }: Props) => {
       ...s,
       inputValue:
         typeof inputChildren === 'string' ? inputChildren : s.inputValue,
+      lastSelectedInputValue:
+        typeof inputChildren === 'string'
+          ? inputChildren
+          : s.lastSelectedInputValue,
     }));
   }, [inputChildren]);
 

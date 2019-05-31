@@ -6,6 +6,7 @@ export interface State {
   selectedIndex: number | null;
   highlightedIndex: number | null;
   inputValue: string;
+  lastSelectedInputValue: string;
   lastKey: ' ' | 'Enter' | 'Escape' | 'ArrowUp' | 'ArrowDown' | null;
 }
 
@@ -18,6 +19,7 @@ export const initialState = {
   selectedIndex: null,
   highlightedIndex: null,
   inputValue: '',
+  lastSelectedInputValue: '',
   lastKey: null,
 };
 
