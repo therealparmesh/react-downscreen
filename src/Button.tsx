@@ -47,7 +47,7 @@ const Button = ({ children, ...props }: Props) => {
           break;
         }
         case 'Enter': {
-          if (state.isOpen) {
+          if (state.isOpen && state.highlightedIndex !== null) {
             event.preventDefault();
 
             setState(s => ({
@@ -67,7 +67,10 @@ const Button = ({ children, ...props }: Props) => {
           setState(s => ({
             ...s,
             isOpen: false,
+            selectedIndex: null,
             highlightedIndex: null,
+            inputValue: '',
+            lastSelectedInputValue: null,
             lastKey: 'Escape',
           }));
 

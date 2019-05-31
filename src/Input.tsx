@@ -34,7 +34,10 @@ const Input = ({ children, ...props }: Props) => {
       ...s,
       isOpen: false,
       highlightedIndex: null,
-      inputValue: s.lastSelectedInputValue,
+      inputValue:
+        typeof s.lastSelectedInputValue === 'string'
+          ? s.lastSelectedInputValue
+          : s.inputValue,
     }));
   }, []);
 
@@ -44,7 +47,7 @@ const Input = ({ children, ...props }: Props) => {
 
       switch (key) {
         case 'Enter': {
-          if (state.isOpen) {
+          if (state.isOpen && state.highlightedIndex !== null) {
             event.preventDefault();
 
             setState(s => ({
@@ -64,8 +67,10 @@ const Input = ({ children, ...props }: Props) => {
           setState(s => ({
             ...s,
             isOpen: false,
+            selectedIndex: null,
             highlightedIndex: null,
-            inputValue: s.lastSelectedInputValue,
+            inputValue: '',
+            lastSelectedInputValue: null,
             lastKey: 'Escape',
           }));
 
