@@ -15,7 +15,7 @@ export type Props = React.HTMLAttributes<HTMLDivElement> & {
   children: React.ReactNode;
   onSelect: (selectedIndex: State['selectedIndex']) => void;
   initial?: State;
-  itemsLength: number;
+  totalCount: number;
   id: Required<React.HTMLAttributes<HTMLDivElement>['id']>;
 };
 
@@ -23,7 +23,7 @@ const Downscreen = ({
   children,
   onSelect = () => {},
   initial = initialState,
-  itemsLength,
+  totalCount,
   id,
   ...props
 }: Props) => {
@@ -33,11 +33,11 @@ const Downscreen = ({
     () => ({
       state,
       setState,
-      itemsLength,
+      totalCount,
       id,
       getMenuItemsRef: () => menuItemsRef,
     }),
-    [state, itemsLength, id]
+    [state, totalCount, id]
   );
 
   useEffectAfterMount(() => {
@@ -47,7 +47,7 @@ const Downscreen = ({
           setState(s => ({
             ...s,
             highlightedIndex: getLastPossibleIndex(
-              itemsLength,
+              totalCount,
               menuItemsRef.current
             ),
           }));
@@ -58,7 +58,7 @@ const Downscreen = ({
           setState(s => ({
             ...s,
             highlightedIndex: getFirstPossibleIndex(
-              itemsLength,
+              totalCount,
               menuItemsRef.current
             ),
             lastKey: 'ArrowDown',

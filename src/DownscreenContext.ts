@@ -26,13 +26,13 @@ export const initialState = {
 const DownscreenContext = React.createContext<{
   state: State;
   setState: React.Dispatch<React.SetStateAction<State>>;
-  itemsLength: Props['itemsLength'];
+  totalCount: Props['totalCount'];
   id: Props['id'];
   getMenuItemsRef: () => React.MutableRefObject<MenuItemsRef>;
 }>({
   state: initialState,
   setState: () => {},
-  itemsLength: 0,
+  totalCount: 0,
   id: '',
   getMenuItemsRef: () => ({
     current: {},

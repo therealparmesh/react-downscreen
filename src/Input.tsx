@@ -12,13 +12,9 @@ type Props = React.HTMLAttributes<HTMLInputElement> & {
 };
 
 const Input = ({ children, ...props }: Props) => {
-  const {
-    state,
-    setState,
-    itemsLength,
-    id,
-    getMenuItemsRef,
-  } = React.useContext(DownscreenContext);
+  const { state, setState, totalCount, id, getMenuItemsRef } = React.useContext(
+    DownscreenContext
+  );
 
   const onChange = React.useCallback(event => {
     const {
@@ -84,7 +80,7 @@ const Input = ({ children, ...props }: Props) => {
               ...s,
               highlightedIndex: getPreviousIndex(
                 state.highlightedIndex,
-                itemsLength,
+                totalCount,
                 getMenuItemsRef().current
               ),
               lastKey: 'ArrowUp',
@@ -108,7 +104,7 @@ const Input = ({ children, ...props }: Props) => {
               ...s,
               highlightedIndex: getNextIndex(
                 state.highlightedIndex,
-                itemsLength,
+                totalCount,
                 getMenuItemsRef().current
               ),
               lastKey: 'ArrowDown',
@@ -125,7 +121,7 @@ const Input = ({ children, ...props }: Props) => {
         }
       }
     },
-    [itemsLength, state.highlightedIndex, state.isOpen]
+    [totalCount, state.highlightedIndex, state.isOpen]
   );
 
   const inputChildren = React.useMemo(() => children(state.selectedIndex), [

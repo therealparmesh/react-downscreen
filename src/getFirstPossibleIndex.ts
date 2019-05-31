@@ -2,10 +2,10 @@ import { Props } from './Downscreen';
 import { MenuItemsRef } from './DownscreenContext';
 
 const getFirstPossibleIndex = (
-  itemsLength: Props['itemsLength'],
+  totalCount: Props['totalCount'],
   map: MenuItemsRef
 ) => {
-  for (let i = 0; i < itemsLength; i++) {
+  for (let i = 0; i < totalCount; i++) {
     if (map[i]) {
       return i;
     }

@@ -12,7 +12,7 @@ const Button = ({ children, ...props }: Props) => {
   const {
     state,
     setState,
-    itemsLength,
+    totalCount,
     id,
     getMenuItemsRef,
   } = React.useContext(DownscreenContext);
@@ -81,7 +81,7 @@ const Button = ({ children, ...props }: Props) => {
               ...s,
               highlightedIndex: getPreviousIndex(
                 state.highlightedIndex,
-                itemsLength,
+                totalCount,
                 getMenuItemsRef().current
               ),
               lastKey: 'ArrowUp',
@@ -104,7 +104,7 @@ const Button = ({ children, ...props }: Props) => {
               ...s,
               highlightedIndex: getNextIndex(
                 state.highlightedIndex,
-                itemsLength,
+                totalCount,
                 getMenuItemsRef().current
               ),
               lastKey: 'ArrowDown',
@@ -121,7 +121,7 @@ const Button = ({ children, ...props }: Props) => {
         }
       }
     },
-    [itemsLength, state.highlightedIndex, state.isOpen]
+    [totalCount, state.highlightedIndex, state.isOpen]
   );
 
   const onClick = React.useCallback(event => {

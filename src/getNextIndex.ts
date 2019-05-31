@@ -4,12 +4,12 @@ import { Props } from './Downscreen';
 
 const getNextIndex = (
   currentIndex: State['highlightedIndex'],
-  itemsLength: Props['itemsLength'],
+  totalCount: Props['totalCount'],
   map: MenuItemsRef
 ) => {
   for (
     let i = currentIndex === null ? 0 : currentIndex + 1;
-    i < itemsLength;
+    i < totalCount;
     i++
   ) {
     if (map[i]) {
@@ -17,7 +17,7 @@ const getNextIndex = (
     }
   }
 
-  return getFirstPossibleIndex(itemsLength, map);
+  return getFirstPossibleIndex(totalCount, map);
 };
 
 export default getNextIndex;

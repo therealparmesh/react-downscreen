@@ -4,7 +4,7 @@ import { Props } from './Downscreen';
 
 const getPreviousIndex = (
   currentIndex: State['highlightedIndex'],
-  itemsLength: Props['itemsLength'],
+  totalCount: Props['totalCount'],
   map: MenuItemsRef
 ) => {
   if (currentIndex !== null) {
@@ -15,7 +15,7 @@ const getPreviousIndex = (
     }
   }
 
-  return getLastPossibleIndex(itemsLength, map);
+  return getLastPossibleIndex(totalCount, map);
 };
 
 export default getPreviousIndex;

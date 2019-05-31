@@ -99,7 +99,7 @@ export const QuickButtonExample = () => {
   return (
     <Downscreen
       onSelect={console.log}
-      itemsLength={items.length}
+      totalCount={items.length}
       id="quick-button-example"
     >
       <StyledButton>
@@ -127,7 +127,7 @@ export const QuickInputExample = () => {
   return (
     <Downscreen
       onSelect={console.log}
-      itemsLength={items.length}
+      totalCount={items.length}
       id="quick-input-example"
     >
       <StyledLabel>Select:</StyledLabel>

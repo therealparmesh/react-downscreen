@@ -2,10 +2,10 @@ import { Props } from './Downscreen';
 import { MenuItemsRef } from './DownscreenContext';
 
 const getLastPossibleIndex = (
-  itemsLength: Props['itemsLength'],
+  totalCount: Props['totalCount'],
   map: MenuItemsRef
 ) => {
-  for (let i = itemsLength - 1; i >= 0; i--) {
+  for (let i = totalCount - 1; i >= 0; i--) {
     if (map[i]) {
       return i;
     }

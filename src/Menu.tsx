@@ -11,13 +11,13 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {
 };
 
 const Menu = ({ children, ...props }: Props) => {
-  const { state, itemsLength, id } = React.useContext(DownscreenContext);
+  const { state, totalCount, id } = React.useContext(DownscreenContext);
 
   const menuChildren = React.useMemo(
     () =>
       Array.from(
         {
-          length: itemsLength,
+          length: totalCount,
         },
         (_, index) =>
           children({
