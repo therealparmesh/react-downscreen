@@ -11,6 +11,7 @@ const MenuItem = ({ index, children, ...props }: Props) => {
   const { state, setState, id, getMenuItemsRef } = React.useContext(
     DownscreenContext
   );
+
   const shouldScroll = React.useRef<boolean>(true);
   const scrollRef = React.useRef<HTMLDivElement>(null);
 
