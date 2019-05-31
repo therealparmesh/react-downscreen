@@ -72,7 +72,8 @@ const StyledLabel = styled(Label)`
   display: block;
   font-size: 16px;
   font-weight: bold;
-  margin: 16px 0 8px;
+  margin: 0 0 8px;
+  width: 240px;
 `;
 
 const StyledMenu = styled(Menu)`
