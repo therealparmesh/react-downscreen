@@ -49,8 +49,9 @@ const MenuItem = ({ index, children, ...props }: Props) => {
   const onClick = React.useCallback(() => {
     setState(s => ({
       ...s,
-      selectedIndex: index,
       isOpen: false,
+      selectedIndex: index,
+      highlightedIndex: null,
     }));
   }, [index]);
 
