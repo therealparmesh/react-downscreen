@@ -11,21 +11,24 @@ import getLastPossibleIndex from './getLastPossibleIndex';
 // TODO: extract custom hooks, break them down by domain
 // TODO: clean up state management (useReducer), memoize more for better performance (useMemo)
 
-export type Props = React.HTMLAttributes<HTMLDivElement> & {
+export interface Props {
   children: React.ReactNode;
   onSelect: (selectedIndex: State['selectedIndex']) => void;
   initial?: State;
   totalCount: number;
   id: Required<React.HTMLAttributes<HTMLDivElement>['id']>;
-};
+  className?: React.HTMLAttributes<HTMLDivElement>['className'];
+  style?: React.HTMLAttributes<HTMLDivElement>['style'];
+}
 
 const Downscreen = ({
+  className,
+  style,
   children,
   onSelect = () => {},
   initial = initialState,
   totalCount,
   id,
-  ...props
 }: Props) => {
   const menuItemsRef = React.useRef<MenuItemsRef>({});
   const [state, setState] = React.useState<State>(initial);
@@ -85,7 +88,8 @@ const Downscreen = ({
         aria-controls={state.isOpen ? `${id}-menu` : undefined}
         aria-owns={state.isOpen ? `${id}-menu` : undefined}
         aria-labelledby={`${id}-label`}
-        {...props}
+        className={className}
+        style={style}
       >
         {children}
       </div>
