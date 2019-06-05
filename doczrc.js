@@ -4,4 +4,5 @@ export default {
   title: 'React Downscreen ⛹️',
   base: `/${pkg.name}/`,
   typescript: true,
+  propsParser: false,
 };

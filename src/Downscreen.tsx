@@ -22,13 +22,13 @@ export interface Props {
 }
 
 const Downscreen = ({
-  className,
-  style,
   children,
   onSelect = () => {},
   initial = initialState,
   totalCount,
   id,
+  className,
+  style,
 }: Props) => {
   const menuItemsRef = React.useRef<MenuItemsRef>({});
   const [state, setState] = React.useState<State>(initial);
