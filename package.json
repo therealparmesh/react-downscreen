@@ -8,7 +8,8 @@
   "scripts": {
     "docz": "docz build",
     "start": "docz dev",
-    "tsc": "tsc --noEmit"
+    "tsc": "tsc --noEmit",
+    "version": "npx @pika/pack build"
   },
   "dependencies": {
     "scroll-into-view-if-needed": "2.2.20"
