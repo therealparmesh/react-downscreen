@@ -34,7 +34,7 @@
     "docz-theme-default": "1.2.0",
     "husky": "3.0.9",
     "prettier": "1.18.2",
-    "pretty-quick": "2.0.0",
+    "pretty-quick": "2.0.1",
     "react": "16.11.0",
     "react-dom": "16.11.0",
     "styled-components": "4.4.1",
