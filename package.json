@@ -13,7 +13,7 @@
     "start": "docz dev"
   },
   "dependencies": {
-    "scroll-into-view-if-needed": "2.2.20"
+    "scroll-into-view-if-needed": "2.2.25"
   },
   "peerDependencies": {
     "react": ">=16.8.0"
